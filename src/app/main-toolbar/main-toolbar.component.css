@@ -1,0 +1,33 @@
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100% !important;
+}
+
+span {
+  padding-left: 16px;
+}
+
+.push-element {
+  height: 64px;
+}
+
+@media (max-width: 600px) {
+  .push-element {
+    height: 56px;
+  }
+}
+
+.user-photo {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  border-radius: 32px;
+  background: white;
+}
+
+.app-title {
+  flex: 1;
+}
