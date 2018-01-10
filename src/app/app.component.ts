@@ -7,11 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   sidenavOpened = false;
+  fakeOpened = true;
 
   toggleSidenav() {
     this.sidenavOpened = !this.sidenavOpened;
   }
-  
+
   closeSidenav() {
     this.sidenavOpened = false;
   }

@@ -6,24 +6,29 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   MatToolbarModule,
   MatSidenavModule,
+  MatListModule,
   MatIconModule,
-  MatButtonModule,
-  MatListModule
+  MatButtonModule
 } from '@angular/material';
+
+import { RemindersModule } from './reminders/reminders.module';
 
 import { AppComponent } from './app.component';
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { MainSidenavContentComponent } from './main-sidenav-content/main-sidenav-content.component';
+import { RemindersListComponent } from './reminders/reminders-list/reminders-list.component';
 
 const appRoutes: Routes = [
-  { path: '', component: AppComponent, pathMatch: 'full'}
+  { path: '', redirectTo: '/inbox', pathMatch: 'full' },
+  { path: 'inbox', component: RemindersListComponent },
+  { path: 'archive', component: RemindersListComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     MainToolbarComponent,
-	MainSidenavContentComponent
+    MainSidenavContentComponent
   ],
   imports: [
     BrowserModule,
@@ -33,10 +38,11 @@ const appRoutes: Routes = [
       { enableTracing: false } // <-- set to true for debugging purposes only
     ),
     MatToolbarModule,
+    MatSidenavModule,
+    RemindersModule,
+    MatListModule,
     MatIconModule,
-    MatButtonModule,
-	MatSidenavModule,
-	MatListModule
+    MatButtonModule
   ],
   providers: [],
   exports: [],

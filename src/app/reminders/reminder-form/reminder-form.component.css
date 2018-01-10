@@ -1,0 +1,9 @@
+mat-form-field {
+  display: block;
+}
+
+.user-photo {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
