@@ -27,7 +27,7 @@ jdk:
 
 script:
   - mvn clean test verify package sonar:sonar
-  - cat ./coverage/coverage.lcov | ./node_modules/coveralls/bin/coveralls.js
+  - cat ./coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
   
 cache:
   directories:
