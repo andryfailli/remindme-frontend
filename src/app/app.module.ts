@@ -5,12 +5,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 import {
   MatToolbarModule,
+  MatSidenavModule,
   MatIconModule,
-  MatButtonModule
+  MatButtonModule,
+  MatListModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
+import { MainSidenavContentComponent } from './main-sidenav-content/main-sidenav-content.component';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent, pathMatch: 'full'}
@@ -19,7 +22,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    MainToolbarComponent
+    MainToolbarComponent,
+	MainSidenavContentComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,9 @@ const appRoutes: Routes = [
     ),
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+	MatSidenavModule,
+	MatListModule
   ],
   providers: [],
   exports: [],
