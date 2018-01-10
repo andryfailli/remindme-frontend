@@ -5,8 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
-    "test": "ng test --single-run",
+    "build": "ng build --aot --prod",
+    "test": "ng test --single-run --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -47,6 +47,7 @@
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
-    "typescript": "~2.4.2"
+    "typescript": "~2.4.2",
+    "coveralls": "~3.0.0"
   }
 }
