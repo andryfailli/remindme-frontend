@@ -1,0 +1,12 @@
+language: node_js
+
+sudo: required
+
+services:
+  - docker
+    
+jdk:
+  - oraclejdk8
+
+script:
+  - mvn clean test verify package
