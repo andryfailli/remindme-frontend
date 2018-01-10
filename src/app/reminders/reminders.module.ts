@@ -28,6 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersModule } from '../users/users.module';
 import { UsersService } from '../users/users-service/users.service';
 import { ReminderFormComponent } from './reminder-form/reminder-form.component';
+import { UtilsModule } from '../utils/utils.module';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { ReminderFormComponent } from './reminder-form/reminder-form.component';
     ReactiveFormsModule,
     UsersModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    UtilsModule
   ],
   declarations: [
     RemindersListComponent,
