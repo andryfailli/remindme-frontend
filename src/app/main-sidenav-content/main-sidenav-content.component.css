@@ -1,0 +1,12 @@
+mat-icon {
+  line-height: 40px;
+  text-align: center;
+}
+
+a {
+  min-width: 150px;
+}
+
+.active {
+  background: rgba(0, 0, 0, 0.04);
+}

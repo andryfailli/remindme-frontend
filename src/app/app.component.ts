@@ -11,4 +11,8 @@ export class AppComponent {
   toggleSidenav() {
     this.sidenavOpened = !this.sidenavOpened;
   }
+  
+  closeSidenav() {
+    this.sidenavOpened = false;
+  }
 }
