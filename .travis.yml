@@ -4,9 +4,16 @@ sudo: required
 
 services:
   - docker
+  
+node_js:
+  - "6"
     
 jdk:
   - oraclejdk8
 
 script:
   - mvn clean test verify package
+  
+cache:
+  directories:
+    - "node_modules"
