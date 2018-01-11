@@ -5,4 +5,13 @@ describe('ClickStopPropagationDirective', () => {
     const directive = new ClickStopPropagationDirective();
     expect(directive).toBeTruthy();
   });
+  it('should call stopPropagation on click', () => {
+    const eventMock = {
+      stopPropagation: () => true
+    };
+    spyOn(eventMock, 'stopPropagation');
+    const directive = new ClickStopPropagationDirective();
+    directive.onClick(eventMock);
+    expect(eventMock.stopPropagation).toHaveBeenCalled();
+  });
 });

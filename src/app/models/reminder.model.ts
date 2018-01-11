@@ -5,7 +5,7 @@ export class Reminder extends Base {
   date: string;
   title: string;
   user: User;
-  archived = false;
+  archived: boolean;
 
   constructor(object: object = {}) {
     super(object);

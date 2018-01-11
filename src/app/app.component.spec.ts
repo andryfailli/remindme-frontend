@@ -19,4 +19,23 @@ describe('AppComponent', () => {
       expect(app).toBeTruthy();
     })
   );
+  it(
+    'should toggle sidenav',
+    async(() => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.debugElement.componentInstance;
+      const value = app.sidenavOpened;
+      app.toggleSidenav();
+      expect(app.sidenavOpened).toEqual(!value);
+    })
+  );
+  it(
+    'should close sidenav',
+    async(() => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.debugElement.componentInstance;
+      app.closeSidenav();
+      expect(app.sidenavOpened).toEqual(false);
+    })
+  );
 });
