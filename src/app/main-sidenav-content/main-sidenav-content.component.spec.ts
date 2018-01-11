@@ -7,13 +7,14 @@ describe('MainSidenavContentComponent', () => {
   let component: MainSidenavContentComponent;
   let fixture: ComponentFixture<MainSidenavContentComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ MainSidenavContentComponent ],
-	  schemas: [ NO_ERRORS_SCHEMA ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [MainSidenavContentComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MainSidenavContentComponent);

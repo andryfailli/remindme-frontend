@@ -5,7 +5,7 @@ export class User extends Base {
   email: string;
   photoUrl: string;
 
-  constructor(object: Object = {}) {
+  constructor(object: object = {}) {
     super(object);
   }
 }

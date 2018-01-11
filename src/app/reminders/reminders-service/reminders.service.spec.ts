@@ -1,4 +1,4 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { RemindersService } from './reminders.service';
 
@@ -9,7 +9,10 @@ describe('RemindersService', () => {
     });
   });
 
-  it('should be created', inject([RemindersService], (service: RemindersService) => {
-    expect(service).toBeTruthy();
-  }));
+  it(
+    'should be created',
+    inject([RemindersService], (service: RemindersService) => {
+      expect(service).toBeTruthy();
+    })
+  );
 });

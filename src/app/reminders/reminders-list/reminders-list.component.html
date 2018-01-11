@@ -1,0 +1,12 @@
+<mat-nav-list>
+    <h3 mat-subheader>Upcoming</h3>
+    <app-reminder-list-item *ngFor="let reminder of remindersUpcoming$ | async" [reminder]="reminder" (archive)="archiveReminder(reminder)"
+        (unarchive)="unarchiveReminder(reminder)" (delete)="deleteReminder(reminder)"></app-reminder-list-item>
+    <h3 mat-subheader>Past</h3>
+    <app-reminder-list-item *ngFor="let reminder of remindersPast$ | async" [reminder]="reminder" (archive)="archiveReminder(reminder)"
+        (unarchive)="unarchiveReminder(reminder)" (delete)="deleteReminder(reminder)"></app-reminder-list-item>
+</mat-nav-list>
+
+<button mat-fab style="position: fixed; bottom:16px; right:16px;" [routerLink]="['/inbox', {reminder: ''}]">
+    <mat-icon aria-label="New reminder" matTooltip="New reminder">add</mat-icon>
+</button>
