@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
 import { ClickStopPropagationDirective } from './click-stop-propagation/click-stop-propagation.directive';
 
 @NgModule({
