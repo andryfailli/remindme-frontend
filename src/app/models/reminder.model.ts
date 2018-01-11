@@ -1,5 +1,5 @@
-import { User } from './user.model';
 import { Base } from './base.model';
+import { User } from './user.model';
 
 export class Reminder extends Base {
   date: string;
@@ -7,7 +7,7 @@ export class Reminder extends Base {
   user: User;
   archived = false;
 
-  constructor(object: Object = {}) {
+  constructor(object: object = {}) {
     super(object);
     if ('user' in object) {
       Object.assign(this.user, new User(object['user']));

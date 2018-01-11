@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../users/users-service/users.service';
 import { Input } from '@angular/core';
-import { Reminder } from '../../models/reminder.model';
 import { Observable } from 'rxjs/Observable';
+import { Reminder } from '../../models/reminder.model';
 import { User } from '../../models/user.model';
+import { UsersService } from '../../users/users-service/users.service';
 
 @Component({
   selector: 'app-reminder-form',

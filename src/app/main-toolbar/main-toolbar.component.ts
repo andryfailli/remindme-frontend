@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Output, EventEmitter } from '@angular/core';
+import { EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-main-toolbar',

@@ -1,61 +1,55 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
-  MatIconModule,
-  MatListModule,
-  MatMenuModule,
-  MatTooltipModule,
+  MatDatepickerModule,
   MatDialogModule,
   MatFormFieldModule,
+  MatIconModule,
   MatInputModule,
-  MatDatepickerModule,
+  MatListModule,
+  MatMenuModule,
   MatNativeDateModule,
-  MatAutocompleteModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTooltipModule
 } from '@angular/material';
-
-// FIXME: check https://github.com/angular/material2/issues/8375#issuecomment-344240087
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
-import { RemindersListComponent } from '../reminders/reminders-list/reminders-list.component';
-import { ReminderListItemComponent } from './reminder-list-item/reminder-list-item.component';
-import { RouterModule } from '@angular/router';
-import { RemindersService } from './reminders-service/reminders.service';
+import { NgModule } from '@angular/core';
 import { ReminderDialogComponent } from './reminder-dialog/reminder-dialog.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReminderFormComponent } from './reminder-form/reminder-form.component';
+import { ReminderListItemComponent } from './reminder-list-item/reminder-list-item.component';
+import { RemindersListComponent } from '../reminders/reminders-list/reminders-list.component';
+import { RemindersService } from './reminders-service/reminders.service';
+import { RouterModule } from '@angular/router';
 import { UsersModule } from '../users/users.module';
 import { UsersService } from '../users/users-service/users.service';
-import { ReminderFormComponent } from './reminder-form/reminder-form.component';
 import { UtilsModule } from '../utils/utils.module';
+
+// FIXME: check https://github.com/angular/material2/issues/8375#issuecomment-344240087
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     MatButtonModule,
+    MatDialogModule,
     MatIconModule,
     MatListModule,
-    MatMenuModule,
     MatTooltipModule,
-    RouterModule,
-    MatDialogModule,
+    MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    UsersModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatSelectModule,
-    MatSnackBarModule,
-    UtilsModule
+    RouterModule
   ],
   declarations: [
     RemindersListComponent,
     ReminderListItemComponent,
-    ReminderDialogComponent,
-    ReminderFormComponent
+    ReminderFormComponent,
+    ReminderDialogComponent
   ],
-  entryComponents: [ReminderDialogComponent],
   exports: [RemindersListComponent]
 })
 export class RemindersModule {}

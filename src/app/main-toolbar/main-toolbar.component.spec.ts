@@ -7,13 +7,14 @@ describe('MainToolbarComponent', () => {
   let component: MainToolbarComponent;
   let fixture: ComponentFixture<MainToolbarComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ MainToolbarComponent ],
-	  schemas: [ NO_ERRORS_SCHEMA ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [MainToolbarComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MainToolbarComponent);

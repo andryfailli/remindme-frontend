@@ -7,13 +7,14 @@ describe('RemindersListComponent', () => {
   let component: RemindersListComponent;
   let fixture: ComponentFixture<RemindersListComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ RemindersListComponent ],
-	  schemas: [ NO_ERRORS_SCHEMA ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [RemindersListComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RemindersListComponent);

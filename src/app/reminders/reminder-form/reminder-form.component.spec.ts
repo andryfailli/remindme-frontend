@@ -7,13 +7,14 @@ describe('ReminderFormComponent', () => {
   let component: ReminderFormComponent;
   let fixture: ComponentFixture<ReminderFormComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ReminderFormComponent ],
-	  schemas: [ NO_ERRORS_SCHEMA ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [ReminderFormComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReminderFormComponent);

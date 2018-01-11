@@ -4,9 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { Reminder } from '../../models/reminder.model';
 import { RemindersService } from '../reminders-service/reminders.service';
 
-import { startWith } from 'rxjs/operators/startWith';
-import { map } from 'rxjs/operators/map';
 import { FormControl } from '@angular/forms';
+import { map } from 'rxjs/operators/map';
+import { startWith } from 'rxjs/operators/startWith';
 import { User } from '../../models/user.model';
 import { UsersService } from '../../users/users-service/users.service';
 

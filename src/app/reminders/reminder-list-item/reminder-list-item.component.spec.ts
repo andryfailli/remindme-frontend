@@ -1,5 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatMenuModule } from '@angular/material';
 
 import { ReminderListItemComponent } from './reminder-list-item.component';
 
@@ -7,13 +8,15 @@ describe('ReminderListItemComponent', () => {
   let component: ReminderListItemComponent;
   let fixture: ComponentFixture<ReminderListItemComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ReminderListItemComponent ],
-	  schemas: [ NO_ERRORS_SCHEMA ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [MatMenuModule],
+        declarations: [ReminderListItemComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReminderListItemComponent);
