@@ -57,6 +57,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReminderDialogComponent
   ],
   entryComponents: [ReminderDialogComponent],
-  exports: [RemindersListComponent]
+  exports: [RemindersListComponent],
+  providers: [RemindersService]
 })
 export class RemindersModule {}

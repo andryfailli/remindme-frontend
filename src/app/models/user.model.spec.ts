@@ -5,9 +5,14 @@ describe('User', () => {
     const user = new User();
     expect(user).toBeTruthy();
   });
+
   it('should assign values passed to constructor', () => {
-    const value = 'my name';
-    const user = new User({ name: value });
-    expect(user.name).toEqual(value);
+    const name = 'my name';
+    const email = 'email@example.com';
+    const photoUrl = 'http://www.example.com/photo.jpg';
+    const user = new User({ name, email, photoUrl });
+    expect(user.name).toEqual(name);
+    expect(user.email).toEqual(email);
+    expect(user.photoUrl).toEqual(photoUrl);
   });
 });

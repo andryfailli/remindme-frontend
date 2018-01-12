@@ -152,4 +152,50 @@ describe('RemindersService', () => {
       }
     )
   );
+
+  it(
+    'should archive a reminder (update)',
+    inject(
+      [RemindersService, HttpTestingController],
+      (service: RemindersService, httpClientMock: HttpTestingController) => {
+        const reminder = remindersMockData[0];
+        reminder.archived = false;
+
+        service
+          .archive(reminder)
+          .subscribe((reminderRespone: Reminder) =>
+            expect(reminderRespone.archived).toEqual(true)
+          );
+
+        const request = httpClientMock.expectOne(
+          service['apiBaseUrl'] + '/' + reminder.id
+        );
+        expect(request.request.method).toEqual('POST');
+        request.flush(reminder);
+      }
+    )
+  );
+
+  it(
+    'should unarchive a reminder (update)',
+    inject(
+      [RemindersService, HttpTestingController],
+      (service: RemindersService, httpClientMock: HttpTestingController) => {
+        const reminder = remindersMockData[0];
+        reminder.archived = true;
+
+        service
+          .unarchive(reminder)
+          .subscribe((reminderRespone: Reminder) =>
+            expect(reminderRespone.archived).toEqual(false)
+          );
+
+        const request = httpClientMock.expectOne(
+          service['apiBaseUrl'] + '/' + reminder.id
+        );
+        expect(request.request.method).toEqual('POST');
+        request.flush(reminder);
+      }
+    )
+  );
 });
