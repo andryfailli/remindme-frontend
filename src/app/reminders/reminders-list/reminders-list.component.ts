@@ -36,15 +36,7 @@ export class RemindersListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.reminders$ = this.remindersService.list();
-
-    this.remindersUpcoming$ = this.reminders$.map((reminders: Reminder[]) =>
-      reminders.filter((reminder: Reminder) => reminder.isPast() === false)
-    );
-
-    this.remindersPast$ = this.reminders$.map((reminders: Reminder[]) =>
-      reminders.filter((reminder: Reminder) => reminder.isPast() === true)
-    );
+    this.listReminders();
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('reminder')) {
@@ -62,32 +54,48 @@ export class RemindersListComponent implements OnInit {
               queryParams: { reminder: null }
             }
           );
+          this.listReminders();
         });
       }
     });
   }
 
+  private listReminders() {
+    this.reminders$ = this.remindersService.list(
+      this.router.url.startsWith('/inbox') ? false : true
+    );
+
+    this.remindersUpcoming$ = this.reminders$.map((reminders: Reminder[]) =>
+      reminders.filter((reminder: Reminder) => reminder.isPast() === false)
+    );
+
+    this.remindersPast$ = this.reminders$.map((reminders: Reminder[]) =>
+      reminders.filter((reminder: Reminder) => reminder.isPast() === true)
+    );
+  }
+
   private archiveReminder(reminder: Reminder) {
-    this.remindersService.archive(reminder).subscribe(() =>
+    this.remindersService.archive(reminder).subscribe(() => {
       this.matSnackBar.open('Reminder moved to the archive.', null, {
         duration: 2000
-      })
-    );
+      });
+      this.listReminders();
+    });
   }
 
   private unarchiveReminder(reminder: Reminder) {
-    this.remindersService.unarchive(reminder).subscribe(() =>
+    this.remindersService.unarchive(reminder).subscribe(() => {
       this.matSnackBar.open('Reminder moved to inbox.', null, {
         duration: 2000
-      })
-    );
+      });
+      this.listReminders();
+    });
   }
 
   private deleteReminder(reminder: Reminder) {
-    this.remindersService
-      .delete(reminder)
-      .subscribe(() =>
-        this.matSnackBar.open('Reminder deleted.', null, { duration: 2000 })
-      );
+    this.remindersService.delete(reminder).subscribe(() => {
+      this.matSnackBar.open('Reminder deleted.', null, { duration: 2000 });
+      this.listReminders();
+    });
   }
 }

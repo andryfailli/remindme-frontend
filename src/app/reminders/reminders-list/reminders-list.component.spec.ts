@@ -14,6 +14,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RemindersListComponent', () => {
   let component: RemindersListComponent;
@@ -25,7 +26,8 @@ describe('RemindersListComponent', () => {
         imports: [
           MatDialogModule,
           RouterTestingModule.withRoutes([]),
-          MatSnackBarModule
+          MatSnackBarModule,
+          HttpClientTestingModule
         ],
         declarations: [RemindersListComponent],
         schemas: [NO_ERRORS_SCHEMA],

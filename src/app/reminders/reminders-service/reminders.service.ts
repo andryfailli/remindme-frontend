@@ -1,69 +1,43 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Reminder } from '../../models/reminder.model';
 import { User } from '../../models/user.model';
 
+import { environment } from '../../../environments/environment';
+import { remindersMockData } from './reminders-mock-data';
+
 @Injectable()
 export class RemindersService {
-  constructor() {}
+  private apiBaseUrl = environment.apiBaseUrl + '/reminder';
+
+  constructor(private httpClient: HttpClient) {}
 
   public get(id: string): Observable<Reminder> {
-    const u1 = new User({
-      id: 1,
-      name: 'Pinco',
-      photoUrl:
-        'https://lh3.googleusercontent.com/-ZFdmXbzeue0/AAAAAAAAAAI/AAAAAAAAAAA/AA6ZPT7VXXXjeDJgJ8FOKBGKERe2QpbBqw/s64-c-mo/photo.jpg'
-    });
-
-    const rem = new Reminder({
-      id: 1,
-      title: 'test reminder',
-      date: '2017-12-13T10:10',
-      archived: false,
-      user: u1
-    });
-
-    return Observable.of(rem);
+    return this.httpClient.get<Reminder>(this.apiBaseUrl + '/' + id);
   }
 
-  public list(): Observable<Reminder[]> {
-    const u1 = new User({
-      id: 1,
-      name: 'Pinco',
-      photoUrl:
-        'https://lh3.googleusercontent.com/-ZFdmXbzeue0/AAAAAAAAAAI/AAAAAAAAAAA/AA6ZPT7VXXXjeDJgJ8FOKBGKERe2QpbBqw/s64-c-mo/photo.jpg'
-    });
-    const u2 = new User({
-      id: 2,
-      name: 'Pallino',
-      photoUrl:
-        'https://lh3.googleusercontent.com/-ZFdmXbzeue0/AAAAAAAAAAI/AAAAAAAAAAA/AA6ZPT7VXXXjeDJgJ8FOKBGKERe2QpbBqw/s64-c-mo/photo.jpg'
-    });
-
-    const rem1 = new Reminder({
-      id: 1,
-      title: 'test reminder 1',
-      date: '2017-12-13T10:10',
-      archived: false,
-      user: u1
-    });
-    const rem2 = new Reminder({
-      id: 2,
-      title: 'test reminder 2',
-      date: '2018-01-13T10:10',
-      archived: false,
-      user: u2
-    });
-
-    return Observable.of([rem1, rem2]);
+  public list(archived: boolean): Observable<Reminder[]> {
+    return this.httpClient
+      .get<Reminder[]>(this.apiBaseUrl + '?archived=' + archived.toString())
+      .map((entities: Reminder[]) =>
+        entities.map((entity: Reminder) => new Reminder(entity))
+      );
   }
 
   public save(reminder: Reminder): Observable<Reminder> {
-    return Observable.of(reminder);
+    return reminder.id
+      ? this.httpClient.post<Reminder>(
+          this.apiBaseUrl + '/' + reminder.id,
+          reminder
+        )
+      : this.httpClient
+          .put<Reminder>(this.apiBaseUrl, reminder)
+          .map((entity: Reminder) => new Reminder(entity));
   }
 
-  public delete(reminder: Reminder): Observable<Reminder> {
-    return Observable.of(reminder);
+  public delete(reminder: Reminder): Observable<void> {
+    return this.httpClient.delete<void>(this.apiBaseUrl + '/' + reminder.id);
   }
 
   public archive(reminder: Reminder): Observable<Reminder> {

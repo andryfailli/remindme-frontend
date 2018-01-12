@@ -29,7 +29,7 @@ export class ReminderDialogComponent implements OnInit {
     this.reminder =
       this.data.reminderId !== ''
         ? await this.remindersService.get(this.data.reminderId).toPromise()
-        : new Reminder();
+        : new Reminder({ archived: false });
   }
 
   saveReminder() {

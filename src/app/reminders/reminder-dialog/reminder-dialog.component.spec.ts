@@ -9,6 +9,8 @@ import {
 } from '@angular/material';
 
 import { ReminderDialogComponent } from './reminder-dialog.component';
+import { RemindersService } from '../reminders-service/reminders.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ReminderDialogComponent', () => {
   let component: ReminderDialogComponent;
@@ -17,7 +19,7 @@ describe('ReminderDialogComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [MatDialogModule, LayoutModule],
+        imports: [MatDialogModule, LayoutModule, HttpClientTestingModule],
         declarations: [ReminderDialogComponent],
         schemas: [NO_ERRORS_SCHEMA],
         providers: [
