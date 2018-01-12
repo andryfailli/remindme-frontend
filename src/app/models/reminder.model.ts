@@ -9,7 +9,7 @@ export class Reminder extends Base {
 
   constructor(object: object = {}) {
     super(object);
-    if ('user' in object) {
+    if ('user' in object && object['user'] !== null) {
       Object.assign(this.user, new User(object['user']));
     }
   }
