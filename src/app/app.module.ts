@@ -19,6 +19,8 @@ import { MainSidenavContentComponent } from './main-sidenav-content/main-sidenav
 import { RemindersListComponent } from './reminders/reminders-list/reminders-list.component';
 import { ClickStopPropagationDirective } from './utils/click-stop-propagation/click-stop-propagation.directive';
 import { UtilsModule } from './utils/utils.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { UsersModule } from './users/users.module';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/inbox', pathMatch: 'full' },
@@ -45,6 +47,8 @@ const appRoutes: Routes = [
     MatListModule,
     MatIconModule,
     MatButtonModule,
+    UsersModule,
+    SubscriptionsModule,
     UtilsModule
   ],
   providers: [],
