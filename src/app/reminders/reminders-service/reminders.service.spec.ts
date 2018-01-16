@@ -80,8 +80,8 @@ describe('RemindersService', () => {
 
         service
           .get(reminder.id)
-          .subscribe((reminderRespone: Reminder) =>
-            expect(reminderRespone).toEqual(reminder)
+          .subscribe((reminderResponse: Reminder) =>
+            expect(reminderResponse).toEqual(reminder)
           );
 
         const request = httpClientMock.expectOne(
@@ -120,8 +120,8 @@ describe('RemindersService', () => {
 
         service
           .save(reminder)
-          .subscribe((reminderRespone: Reminder) =>
-            expect(reminderRespone).toEqual(reminder)
+          .subscribe((reminderResponse: Reminder) =>
+            expect(reminderResponse).toEqual(reminder)
           );
 
         const request = httpClientMock.expectOne(service['apiBaseUrl']);
@@ -140,8 +140,8 @@ describe('RemindersService', () => {
 
         service
           .save(reminder)
-          .subscribe((reminderRespone: Reminder) =>
-            expect(reminderRespone).toEqual(reminder)
+          .subscribe((reminderResponse: Reminder) =>
+            expect(reminderResponse).toEqual(reminder)
           );
 
         const request = httpClientMock.expectOne(
@@ -163,8 +163,8 @@ describe('RemindersService', () => {
 
         service
           .archive(reminder)
-          .subscribe((reminderRespone: Reminder) =>
-            expect(reminderRespone.archived).toEqual(true)
+          .subscribe((reminderResponse: Reminder) =>
+            expect(reminderResponse.archived).toEqual(true)
           );
 
         const request = httpClientMock.expectOne(
@@ -186,8 +186,8 @@ describe('RemindersService', () => {
 
         service
           .unarchive(reminder)
-          .subscribe((reminderRespone: Reminder) =>
-            expect(reminderRespone.archived).toEqual(false)
+          .subscribe((reminderResponse: Reminder) =>
+            expect(reminderResponse.archived).toEqual(false)
           );
 
         const request = httpClientMock.expectOne(
