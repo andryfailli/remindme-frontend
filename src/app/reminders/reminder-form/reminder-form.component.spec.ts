@@ -1,18 +1,31 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReminderFormComponent } from './reminder-form.component';
 import { Base } from '../../models/base.model';
+import { UsersService } from '../../users/users-service/users.service';
+import { ReminderFormComponent } from './reminder-form.component';
+import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs/Observable';
+
+import { usersMockData } from '../../users/users-service/users-mock-data';
+import { User } from '../../models/user.model';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ReminderFormComponent', () => {
   let component: ReminderFormComponent;
   let fixture: ComponentFixture<ReminderFormComponent>;
 
+  const usersServiceStub = {
+    list: () => undefined
+  };
+
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule],
         declarations: [ReminderFormComponent],
-        schemas: [NO_ERRORS_SCHEMA]
+        schemas: [NO_ERRORS_SCHEMA],
+        providers: [{ provide: UsersService, useValue: usersServiceStub }]
       }).compileComponents();
     })
   );
@@ -52,5 +65,12 @@ describe('ReminderFormComponent', () => {
     const item1Mock = new Base({ id: '1' });
     const item2Mock = new Base({ id: '2' });
     expect(component.comparatorById(item1Mock, item2Mock)).toEqual(false);
+  });
+
+  it('should list users on init', () => {
+    spyOn(usersServiceStub, 'list').and.returnValue(usersMockData);
+    component.users$.subscribe((retrievedUsers: User[]) =>
+      expect(retrievedUsers).toEqual(usersMockData)
+    );
   });
 });

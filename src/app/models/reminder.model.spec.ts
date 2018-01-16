@@ -10,6 +10,11 @@ describe('Reminder', () => {
     const reminder = new Reminder({ title: value });
     expect(reminder.title).toEqual(value);
   });
+  it('should assign values passed to constructor, (user=null', () => {
+    const value = 'my title';
+    const reminder = new Reminder({ title: value, user: null });
+    expect(reminder.title).toEqual(value);
+  });
   it('should assign values passed to constructor (achived)', () => {
     const value = true;
     const reminder = new Reminder({ archived: value });

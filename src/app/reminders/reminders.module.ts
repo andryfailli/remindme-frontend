@@ -28,6 +28,7 @@ import { RemindersService } from './reminders-service/reminders.service';
 import { UsersModule } from '../users/users.module';
 import { UsersService } from '../users/users-service/users.service';
 import { UtilsModule } from '../utils/utils.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { UtilsModule } from '../utils/utils.module';
     MatSelectModule,
     MatSnackBarModule,
     RouterModule,
-    UtilsModule
+    UtilsModule,
+    HttpClientModule
   ],
   declarations: [
     RemindersListComponent,
@@ -55,6 +57,7 @@ import { UtilsModule } from '../utils/utils.module';
     ReminderDialogComponent
   ],
   entryComponents: [ReminderDialogComponent],
-  exports: [RemindersListComponent]
+  exports: [RemindersListComponent],
+  providers: [RemindersService]
 })
 export class RemindersModule {}

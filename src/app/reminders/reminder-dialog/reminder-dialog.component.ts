@@ -13,8 +13,7 @@ import { UsersService } from '../../users/users-service/users.service';
 @Component({
   selector: 'app-reminder-dialog',
   templateUrl: './reminder-dialog.component.html',
-  styleUrls: ['./reminder-dialog.component.css'],
-  providers: [RemindersService, MatSnackBar]
+  styleUrls: ['./reminder-dialog.component.css']
 })
 export class ReminderDialogComponent implements OnInit {
   reminder: Reminder;
@@ -25,11 +24,15 @@ export class ReminderDialogComponent implements OnInit {
     private matSnackBar: MatSnackBar
   ) {}
 
-  private async loadReminder() {
-    this.reminder =
-      this.data.reminderId !== ''
-        ? await this.remindersService.get(this.data.reminderId).toPromise()
-        : new Reminder();
+  loadReminder() {
+    if (this.data.reminderId !== '') {
+      this.remindersService
+        .get(this.data.reminderId)
+        .toPromise()
+        .then((reminder: Reminder) => (this.reminder = reminder));
+    } else {
+      this.reminder = new Reminder({ archived: false });
+    }
   }
 
   saveReminder() {
@@ -40,7 +43,7 @@ export class ReminderDialogComponent implements OnInit {
       );
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.loadReminder();
   }
 }
