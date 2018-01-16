@@ -27,10 +27,9 @@ export class RemindersService {
 
   public save(reminder: Reminder): Observable<Reminder> {
     return reminder.id
-      ? this.httpClient.post<Reminder>(
-          this.apiBaseUrl + '/' + reminder.id,
-          reminder
-        )
+      ? this.httpClient
+          .post<Reminder>(this.apiBaseUrl + '/' + reminder.id, reminder)
+          .map((entity: Reminder) => new Reminder(entity))
       : this.httpClient
           .put<Reminder>(this.apiBaseUrl, reminder)
           .map((entity: Reminder) => new Reminder(entity));
