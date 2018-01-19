@@ -46,4 +46,24 @@ describe('UsersService', () => {
       }
     )
   );
+
+  it(
+    'should get',
+    inject(
+      [UsersService, HttpTestingController],
+      (service: UsersService, httpClientMock: HttpTestingController) => {
+        const user = usersMockData[0];
+
+        service
+          .get(user.id)
+          .subscribe((userRespone: User) => expect(userRespone).toEqual(user));
+
+        const request = httpClientMock.expectOne(
+          service['apiBaseUrl'] + '/' + user.id
+        );
+        expect(request.request.method).toEqual('GET');
+        request.flush(user);
+      }
+    )
+  );
 });
