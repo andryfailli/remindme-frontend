@@ -20,6 +20,7 @@ import { RemindersListComponent } from './reminders/reminders-list/reminders-lis
 import { ClickStopPropagationDirective } from './utils/click-stop-propagation/click-stop-propagation.directive';
 import { UtilsModule } from './utils/utils.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { LoginComponent } from './login/login.component';
 import { UsersModule } from './users/users.module';
 
 const appRoutes: Routes = [
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     MainToolbarComponent,
-    MainSidenavContentComponent
+    MainSidenavContentComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
