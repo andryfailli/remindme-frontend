@@ -29,6 +29,7 @@ import { environment } from '../environments/environment';
 import { UsersModule } from './users/users.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from './auth-http-interceptor/auth-http.interceptor';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/inbox', pathMatch: 'full' },
@@ -67,6 +68,7 @@ const appRoutes: Routes = [
     MatButtonModule,
     UtilsModule,
     UsersModule,
+    SubscriptionsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule
   ],

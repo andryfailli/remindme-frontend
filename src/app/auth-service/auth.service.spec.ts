@@ -6,6 +6,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
+import { SubscriptionsService } from '../subscriptions/subscriptions-service/subscriptions.service';
 
 describe('AuthService', () => {
   beforeEach(() => {
@@ -14,6 +15,10 @@ describe('AuthService', () => {
         AuthService,
         {
           provide: UsersService,
+          useValue: {}
+        },
+        {
+          provide: SubscriptionsService,
           useValue: {}
         },
         {
