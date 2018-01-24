@@ -17,7 +17,7 @@ export class MainToolbarComponent implements OnInit {
   user$: Observable<User>;
 
   constructor(private authService: AuthService) {
-    this.user$ = this.authService.user$;
+    this.user$ = this.authService.user$.share();
   }
 
   menuButtonClick = () => this.toggleSidenav.emit();

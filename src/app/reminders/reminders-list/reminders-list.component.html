@@ -1,10 +1,19 @@
 <mat-nav-list>
-    <h3 mat-subheader>Upcoming</h3>
-    <app-reminder-list-item *ngFor="let reminder of remindersUpcoming$ | async" [reminder]="reminder" (archive)="archiveReminder(reminder)"
-        (unarchive)="unarchiveReminder(reminder)" (delete)="deleteReminder(reminder)"></app-reminder-list-item>
-    <h3 mat-subheader>Past</h3>
-    <app-reminder-list-item *ngFor="let reminder of remindersPast$ | async" [reminder]="reminder" (archive)="archiveReminder(reminder)"
-        (unarchive)="unarchiveReminder(reminder)" (delete)="deleteReminder(reminder)"></app-reminder-list-item>
+    <ng-container *ngIf="(remindersUpcoming$ | async) as remindersUpcoming">
+        <ng-container *ngIf="remindersUpcoming.length>0">
+            <h3 mat-subheader>Upcoming</h3>
+            <app-reminder-list-item *ngFor="let reminder of remindersUpcoming" [reminder]="reminder" (archive)="archiveReminder(reminder)"
+                (unarchive)="unarchiveReminder(reminder)" (delete)="deleteReminder(reminder)"></app-reminder-list-item>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="(remindersPast$ | async) as remindersPast">
+        <ng-container *ngIf="remindersPast.length>0">
+            <h3 mat-subheader>Past</h3>
+            <app-reminder-list-item *ngFor="let reminder of remindersPast" [reminder]="reminder" (archive)="archiveReminder(reminder)"
+                (unarchive)="unarchiveReminder(reminder)" (delete)="deleteReminder(reminder)"></app-reminder-list-item>
+        </ng-container>
+    </ng-container>
 </mat-nav-list>
 
 <button mat-fab style="position: fixed; bottom:16px; right:16px;" [routerLink]="['/inbox', {reminder: ''}]">

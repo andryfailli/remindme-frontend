@@ -16,7 +16,7 @@ export class LoginComponent {
   user$: Observable<User>;
 
   constructor(private authService: AuthService, private router: Router) {
-    this.user$ = this.authService.user$;
+    this.user$ = this.authService.user$.share();
   }
 
   signIn(): Promise<any> {

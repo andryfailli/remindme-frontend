@@ -6,7 +6,7 @@ import 'firebase/messaging';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 
-import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 
@@ -26,13 +26,11 @@ export class AuthService {
     private userService: UsersService,
     private subscriptionsService: SubscriptionsService
   ) {
-    this.user$ = this.angularFireAuth.authState.switchMap((user) => {
-      if (user) {
-        const userOb: Observable<User> = userService.get('me');
-        userOb.subscribe((emittedUser: User) =>
-          this.setupMessaging(emittedUser)
-        );
-        return userOb;
+    this.user$ = this.angularFireAuth.authState.switchMap((firebaseUser) => {
+      if (firebaseUser) {
+        const user$: Observable<User> = userService.get('me').share();
+        user$.subscribe((user: User) => this.setupMessaging(user));
+        return user$;
       } else {
         return Observable.of(null);
       }

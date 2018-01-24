@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/share';
 import { filter } from 'rxjs/operator/filter';
 import { map } from 'rxjs/operator/map';
 
@@ -61,9 +62,9 @@ export class RemindersListComponent implements OnInit {
   }
 
   private listReminders() {
-    this.reminders$ = this.remindersService.list(
-      this.router.url.startsWith('/inbox') ? false : true
-    );
+    this.reminders$ = this.remindersService
+      .list(this.router.url.startsWith('/inbox') ? false : true)
+      .share();
 
     this.remindersUpcoming$ = this.reminders$.map((reminders: Reminder[]) =>
       reminders.filter((reminder: Reminder) => reminder.isPast() === false)
