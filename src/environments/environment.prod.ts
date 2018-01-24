@@ -1,7 +1,6 @@
 export const environment = {
   production: true,
   apiBaseUrl: '/api',
-  apiBaseUrl: 'http://remindme-api:8080/api',
   firebaseConfig: {
     apiKey: 'AIzaSyAKt676qPH-JLdPjvMNEuM-6g-fn_Pt2Ow',
     authDomain: 'glass-crossing.firebaseapp.com',
