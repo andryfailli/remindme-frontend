@@ -1,0 +1,8 @@
+<div class="login-btn-container">
+  <button mat-button mat-raised-button class="mat-accent" *ngIf="!(user$ | async)" (click)="signIn()">Sign In</button>
+</div>
+<div class="login-btn-container mat-typography">
+  <h2>{{(user$ | async)?.name}}</h2>
+  <h4>{{(user$ | async)?.email}}</h4>
+  <button mat-button mat-raised-button class="mat-accent" *ngIf="user$ | async" (click)="signOut()">Sign Out</button>
+</div>

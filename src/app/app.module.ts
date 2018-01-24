@@ -19,20 +19,39 @@ import { MainSidenavContentComponent } from './main-sidenav-content/main-sidenav
 import { RemindersListComponent } from './reminders/reminders-list/reminders-list.component';
 import { ClickStopPropagationDirective } from './utils/click-stop-propagation/click-stop-propagation.directive';
 import { UtilsModule } from './utils/utils.module';
-import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { AuthService } from './auth-service/auth.service';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AuthGuard } from './auth-guard/auth.guard';
+import { LoginComponent } from './login/login.component';
+import { AngularFireModule } from 'angularfire2';
+
+import { environment } from '../environments/environment';
 import { UsersModule } from './users/users.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor } from './auth-http-interceptor/auth-http.interceptor';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/inbox', pathMatch: 'full' },
-  { path: 'inbox', component: RemindersListComponent },
-  { path: 'archive', component: RemindersListComponent }
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'inbox',
+    component: RemindersListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'archive',
+    component: RemindersListComponent,
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     MainToolbarComponent,
-    MainSidenavContentComponent
+    MainSidenavContentComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -47,11 +66,21 @@ const appRoutes: Routes = [
     MatListModule,
     MatIconModule,
     MatButtonModule,
+    UtilsModule,
     UsersModule,
     SubscriptionsModule,
-    UtilsModule
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptor,
+      multi: true
+    }
+  ],
   exports: [],
   bootstrap: [AppComponent]
 })
