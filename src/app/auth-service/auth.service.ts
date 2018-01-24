@@ -52,10 +52,10 @@ export class AuthService {
     return promise;
   }
 
-  private setupMessaging(user: User) {
+  setupMessaging(user: User): Promise<any> {
     const messaging = firebase.messaging();
 
-    messaging
+    return messaging
       .requestPermission()
       .then(() => {
         return messaging.getToken();
