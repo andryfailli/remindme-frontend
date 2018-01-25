@@ -6,3 +6,8 @@ firebase.initializeApp({
 });
 
 const messaging = firebase.messaging();
+
+messaging.setBackgroundMessageHandler(function(payload) {
+  const options = {};
+  return self.registration.showNotification(data.title,{});
+});
