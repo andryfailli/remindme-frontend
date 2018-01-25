@@ -21,7 +21,8 @@ describe('LoginComponent', () => {
             provide: AuthService,
             useValue: {
               signIn: () => Observable.of(new User()).toPromise(),
-              signOut: () => Observable.of(null).toPromise()
+              signOut: () => Observable.of(null).toPromise(),
+              user$: Observable.of(new User())
             }
           },
           {
