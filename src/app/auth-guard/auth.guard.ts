@@ -10,7 +10,6 @@ import {
 
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -22,7 +21,6 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
     return this.auth.user$
-      .take(1)
       .map((user) => (user ? true : false))
       .do((authenticated) => {
         if (!authenticated) {

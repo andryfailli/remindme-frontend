@@ -18,7 +18,7 @@ export class ReminderFormComponent implements OnInit {
   constructor(private usersService: UsersService) {}
 
   ngOnInit() {
-    this.users$ = this.usersService.list();
+    this.users$ = this.usersService.list().share();
   }
 
   trackerById(index: number, item: any) {

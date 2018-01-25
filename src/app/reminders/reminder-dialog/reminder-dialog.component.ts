@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators/map';
 import { startWith } from 'rxjs/operators/startWith';
 import { User } from '../../models/user.model';
 import { UsersService } from '../../users/users-service/users.service';
+import { AuthService } from '../../auth-service/auth.service';
 
 @Component({
   selector: 'app-reminder-dialog',
@@ -21,17 +22,24 @@ export class ReminderDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private remindersService: RemindersService,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
+    private authService: AuthService
   ) {}
 
   loadReminder() {
     if (this.data.reminderId !== '') {
       this.remindersService
         .get(this.data.reminderId)
-        .toPromise()
-        .then((reminder: Reminder) => (this.reminder = reminder));
+        .share()
+        .subscribe((reminder: Reminder) => (this.reminder = reminder));
     } else {
-      this.reminder = new Reminder({ archived: false });
+      this.reminder = new Reminder({
+        archived: false,
+        date: new Date().toISOString().substring(0, 19)
+      });
+      this.authService.user$.subscribe(
+        (user: User) => (this.reminder.user = user)
+      );
     }
   }
 

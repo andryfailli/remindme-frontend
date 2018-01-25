@@ -26,7 +26,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     return request.url.startsWith(environment.apiBaseUrl)
       ? this.angularFireAuth.authState.switchMap((user) =>
           Observable.fromPromise(user.getIdToken()).mergeMap((idToken) => {
-            if (user) {
+            if (idToken) {
               request = request.clone({
                 setHeaders: { 'X-Authorization-Firebase': idToken }
               });

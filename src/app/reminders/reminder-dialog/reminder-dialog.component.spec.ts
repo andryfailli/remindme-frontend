@@ -19,6 +19,8 @@ import { Observable } from 'rxjs/Observable';
 import { DebugElement } from '@angular/core/src/debug/debug_node';
 
 import { By } from '@angular/platform-browser';
+import { AuthService } from '../../auth-service/auth.service';
+import { User } from '../../models/user.model';
 
 describe('ReminderDialogComponent', () => {
   let component: ReminderDialogComponent;
@@ -51,13 +53,19 @@ describe('ReminderDialogComponent', () => {
             provide: RemindersService,
             useValue: {
               get: () => Observable.of(remindersMockData[0]),
-              save: data => Observable.of(data)
+              save: (data) => Observable.of(data)
             }
           },
           {
             provide: UsersService,
             useValue: {
               list: () => Observable.of(usersMockData)
+            }
+          },
+          {
+            provide: AuthService,
+            useValue: {
+              user$: Observable.of(new User())
             }
           }
         ]
