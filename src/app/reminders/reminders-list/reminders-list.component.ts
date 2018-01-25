@@ -20,8 +20,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-reminders-list',
   templateUrl: './reminders-list.component.html',
-  styleUrls: ['./reminders-list.component.css'],
-  providers: [RemindersService, MatSnackBar]
+  styleUrls: ['./reminders-list.component.css']
 })
 export class RemindersListComponent implements OnInit {
   private reminders$: Observable<Reminder[]>;
@@ -61,7 +60,7 @@ export class RemindersListComponent implements OnInit {
     });
   }
 
-  private listReminders() {
+  listReminders() {
     this.reminders$ = this.remindersService
       .list(this.router.url.startsWith('/inbox') ? false : true)
       .share();
@@ -75,28 +74,38 @@ export class RemindersListComponent implements OnInit {
     );
   }
 
-  private archiveReminder(reminder: Reminder) {
-    this.remindersService.archive(reminder).subscribe(() => {
+  archiveReminder(reminder: Reminder): Observable<Reminder> {
+    const reminder$: Observable<Reminder> = this.remindersService.archive(
+      reminder
+    );
+    reminder$.subscribe(() => {
       this.matSnackBar.open('Reminder moved to the archive.', null, {
         duration: 2000
       });
       this.listReminders();
     });
+    return reminder$;
   }
 
-  private unarchiveReminder(reminder: Reminder) {
-    this.remindersService.unarchive(reminder).subscribe(() => {
+  unarchiveReminder(reminder: Reminder): Observable<Reminder> {
+    const reminder$: Observable<Reminder> = this.remindersService.unarchive(
+      reminder
+    );
+    reminder$.subscribe(() => {
       this.matSnackBar.open('Reminder moved to inbox.', null, {
         duration: 2000
       });
       this.listReminders();
     });
+    return reminder$;
   }
 
-  private deleteReminder(reminder: Reminder) {
-    this.remindersService.delete(reminder).subscribe(() => {
+  deleteReminder(reminder: Reminder): Observable<void> {
+    const reminder$: Observable<void> = this.remindersService.delete(reminder);
+    reminder$.subscribe(() => {
       this.matSnackBar.open('Reminder deleted.', null, { duration: 2000 });
       this.listReminders();
     });
+    return reminder$;
   }
 }

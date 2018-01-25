@@ -27,7 +27,7 @@ class NoOpHttpHandler implements HttpHandler {
   }
 }
 
-describe('AuthHttpInterceptor', () => {
+describe('AuthHttpInterceptor (with idToken)', () => {
   const ID_TOKEN_MOCK = 'ID_TOKEN_MOCK';
 
   beforeEach(() => {
@@ -88,6 +88,59 @@ describe('AuthHttpInterceptor', () => {
       (authHttpInterceptor: AuthHttpInterceptor) => {
         const angularFireAuth: AngularFireAuth = TestBed.get(AngularFireAuth);
         const request: HttpRequest<any> = new HttpRequest('GET', '/');
+        const handler: HttpHandler = new NoOpHttpHandler();
+
+        spyOn(request, 'clone').and.callThrough();
+        spyOn(handler, 'handle').and.callThrough();
+
+        authHttpInterceptor.intercept(request, handler).subscribe(() => {
+          expect(handler.handle).toHaveBeenCalled();
+          expect(request.clone).toHaveBeenCalledTimes(0);
+        });
+      }
+    )
+  );
+});
+
+describe('AuthHttpInterceptor (without idToken)', () => {
+  const ID_TOKEN_MOCK = null;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        AuthHttpInterceptor,
+        {
+          provide: AngularFireAuth,
+          useValue: {
+            authState: Observable.of({
+              getIdToken: () => Observable.of(ID_TOKEN_MOCK).toPromise()
+            })
+          }
+        }
+      ]
+    });
+  });
+
+  it(
+    'should be created',
+    inject(
+      [AuthHttpInterceptor],
+      (authHttpInterceptor: AuthHttpInterceptor) => {
+        expect(authHttpInterceptor).toBeTruthy();
+      }
+    )
+  );
+
+  it(
+    'should intercept but not add header',
+    inject(
+      [AuthHttpInterceptor],
+      (authHttpInterceptor: AuthHttpInterceptor) => {
+        const angularFireAuth: AngularFireAuth = TestBed.get(AngularFireAuth);
+        const request: HttpRequest<any> = new HttpRequest(
+          'GET',
+          environment.apiBaseUrl
+        );
         const handler: HttpHandler = new NoOpHttpHandler();
 
         spyOn(request, 'clone').and.callThrough();
