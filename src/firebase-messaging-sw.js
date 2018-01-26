@@ -9,7 +9,7 @@ const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload) {
   const options = {
-    icon: '/assets/icon.png'
+    icon: '/favicon.png'
   };
-  return self.registration.showNotification(data.title, options);
+  return self.registration.showNotification(payload.data.title, options);
 });
