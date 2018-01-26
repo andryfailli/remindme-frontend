@@ -6,7 +6,8 @@ import { RemindersListComponent } from './reminders-list.component';
 import {
   MatDialogModule,
   MatSnackBarModule,
-  MatSnackBar
+  MatSnackBar,
+  MatDialog
 } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -22,15 +23,12 @@ describe('RemindersListComponent', () => {
   let component: RemindersListComponent;
   let fixture: ComponentFixture<RemindersListComponent>;
 
+  const REMINDER_ID_MOCK = 'REMINDER_ID_MOCK';
+  const reminderMock = new Reminder({ id: REMINDER_ID_MOCK });
+
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          MatDialogModule,
-          RouterTestingModule.withRoutes([]),
-          MatSnackBarModule,
-          HttpClientTestingModule
-        ],
         declarations: [RemindersListComponent],
         schemas: [NO_ERRORS_SCHEMA],
         providers: [
@@ -47,6 +45,30 @@ describe('RemindersListComponent', () => {
             provide: MatSnackBar,
             useValue: {
               open: () => null
+            }
+          },
+          {
+            provide: Router,
+            useValue: {
+              url: '/inbox',
+              navigate: () => Observable.of(true).toPromise()
+            }
+          },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              paramMap: Observable.of({
+                has: (key: string) => false,
+                get: (key: string) => undefined
+              })
+            }
+          },
+          {
+            provide: MatDialog,
+            useValue: {
+              open: () => {
+                return { afterClosed: () => Observable.of(null) };
+              }
             }
           }
         ]
@@ -109,5 +131,81 @@ describe('RemindersListComponent', () => {
       expect(reminderService.delete).toHaveBeenCalledWith(reminder);
       expect(matSnackBar.open).toHaveBeenCalled();
     });
+  });
+});
+
+describe('RemindersListComponent (with reminderId)', () => {
+  let component: RemindersListComponent;
+  let fixture: ComponentFixture<RemindersListComponent>;
+
+  const REMINDER_ID_MOCK = 'REMINDER_ID_MOCK';
+  const reminderMock = new Reminder({ id: REMINDER_ID_MOCK });
+
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        declarations: [RemindersListComponent],
+        schemas: [NO_ERRORS_SCHEMA],
+        providers: [
+          {
+            provide: RemindersService,
+            useValue: {
+              list: () => Observable.of([new Reminder()]),
+              archive: (reminder) => Observable.of(reminder),
+              unarchive: (reminder) => Observable.of(reminder),
+              delete: (reminder) => Observable.of()
+            }
+          },
+          {
+            provide: MatSnackBar,
+            useValue: {
+              open: () => null
+            }
+          },
+          {
+            provide: Router,
+            useValue: {
+              url: '/inbox',
+              navigate: () => Observable.of(true).toPromise()
+            }
+          },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              paramMap: Observable.of({
+                has: (key: string) => true,
+                get: (key: string) => REMINDER_ID_MOCK
+              })
+            }
+          },
+          {
+            provide: MatDialog,
+            useValue: {
+              open: () => {
+                return { afterClosed: () => Observable.of(reminderMock) };
+              }
+            }
+          }
+        ]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(RemindersListComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should open dialog', () => {
+    const matDialog: MatDialog = TestBed.get(MatDialog);
+    const router: Router = TestBed.get(Router);
+    spyOn(matDialog, 'open').and.callThrough();
+    spyOn(router, 'navigate').and.callThrough();
+    fixture.detectChanges();
+    expect(matDialog.open).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith([
+      '/inbox',
+      { reminder: null }
+    ]);
   });
 });
