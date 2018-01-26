@@ -35,7 +35,7 @@ export class ReminderDialogComponent implements OnInit {
     } else {
       this.reminder = new Reminder({
         archived: false,
-        date: new Date().toISOString().substring(0, 19)
+        date: new Date().toISOString().substring(0, 16)
       });
       this.authService.user$.subscribe(
         (user: User) => (this.reminder.user = user)
