@@ -64,7 +64,6 @@ export class AuthService {
     const messaging = firebase.messaging();
 
     messaging.onMessage((payload: any) => {
-      console.log(payload);
       const options: NotificationOptions = {
         icon: '/favicon.png'
       };
