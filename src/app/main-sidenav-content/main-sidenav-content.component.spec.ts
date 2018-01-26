@@ -3,6 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MainSidenavContentComponent } from './main-sidenav-content.component';
 
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+
 describe('MainSidenavContentComponent', () => {
   let component: MainSidenavContentComponent;
   let fixture: ComponentFixture<MainSidenavContentComponent>;
@@ -24,5 +27,13 @@ describe('MainSidenavContentComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit navigate onClick', () => {
+    const linkElement: DebugElement = fixture.debugElement.query(By.css('a'));
+    let emitted;
+    component.navigate.subscribe(() => (emitted = true));
+    linkElement.triggerEventHandler('click', null);
+    expect(emitted).toEqual(true);
   });
 });
