@@ -15,14 +15,15 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UsersService } from '../../users/users-service/users.service';
 import { remindersMockData } from './../reminders-service/reminders-mock-data';
 import { usersMockData } from './../../users/users-service/users-mock-data';
-import { Observable } from 'rxjs/Observable';
+
 import { DebugElement } from '@angular/core/src/debug/debug_node';
+import { Observable } from 'rxjs/Observable';
 
 import { By } from '@angular/platform-browser';
 import { AuthService } from '../../auth-service/auth.service';
 import { User } from '../../models/user.model';
 
-describe('ReminderDialogComponent', () => {
+const generateTestSuite: any = (reminderId: string) => {
   let component: ReminderDialogComponent;
   let fixture: ComponentFixture<ReminderDialogComponent>;
 
@@ -35,7 +36,7 @@ describe('ReminderDialogComponent', () => {
         providers: [
           {
             provide: MAT_DIALOG_DATA,
-            useValue: { reminderId: '0' }
+            useValue: { reminderId }
           },
           {
             provide: MatDialogRef,
@@ -104,4 +105,9 @@ describe('ReminderDialogComponent', () => {
     fixture.detectChanges();
     expect(component.saveReminder).toHaveBeenCalled();
   });
-});
+};
+
+describe('ReminderDialogComponent (existing reminder)', () =>
+  generateTestSuite('REMAINDER_ID_MOCK'));
+
+describe('ReminderDialogComponent (new reminder)', () => generateTestSuite(''));

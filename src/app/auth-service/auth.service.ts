@@ -73,7 +73,7 @@ export class AuthService {
       );
 
       notification.onclick = () => {
-        const reminderId = payload.data.click_ation.split('=')[1];
+        const reminderId = payload.data.click_action.split('=')[1];
         this.router.navigate(['/inbox', { reminder: reminderId }]);
       };
 
