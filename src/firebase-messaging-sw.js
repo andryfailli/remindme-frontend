@@ -8,6 +8,8 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload) {
-  const options = {};
-  return self.registration.showNotification(data.title,{});
+  const options = {
+    icon: '/assets/icon.png'
+  };
+  return self.registration.showNotification(data.title, options);
 });
