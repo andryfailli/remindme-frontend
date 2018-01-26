@@ -71,10 +71,14 @@ export class AuthService {
         payload.data.title,
         options
       );
-      notification.onclick = () => {
-        const url = new URL(payload.click_ation);
-        this.router.navigate([url.pathname]);
-      };
+      if (payload.data.click_action) {
+        notification.onclick = () => {
+          const reminderId = payload.data.click_ation.split('=')[1];
+          this.router.navigate(['/inbox', { reminder: reminderId }]);
+        };
+      }
+
+      return notification;
     });
 
     return messaging

@@ -87,20 +87,60 @@ describe('AuthService', () => {
   it(
     'should setup messaging',
     inject(
-      [AuthService, SubscriptionsService],
-      (service: AuthService, subscriptionsService: SubscriptionsService) => {
+      [AuthService, SubscriptionsService, Router],
+      (
+        service: AuthService,
+        subscriptionsService: SubscriptionsService,
+        router: Router
+      ) => {
         const ID_TOKEN_MOCK = 'ID_TOKEN_MOCK';
         const userMock = new User({ id: 'id' });
 
-        spyOn(firebase, 'messaging').and.returnValue({
+        let onMessageHandler;
+
+        const messagingMock = {
           requestPermission: () => Observable.of().toPromise(),
           getToken: () => Observable.of(ID_TOKEN_MOCK).toPromise(),
-          onMessage: () => undefined
-        });
+          onMessage: (_onMessageHandler) =>
+            (onMessageHandler = _onMessageHandler)
+        };
+
+        spyOn(messagingMock, 'requestPermission').and.callThrough();
+        spyOn(messagingMock, 'getToken').and.callThrough();
+        spyOn(messagingMock, 'onMessage').and.callThrough();
+        spyOn(firebase, 'messaging').and.returnValue(messagingMock);
         spyOn(subscriptionsService, 'save').and.callThrough();
-        service
-          .setupMessaging(userMock)
-          .then(() => expect(subscriptionsService.save).toHaveBeenCalled());
+        spyOn(router, 'navigate').and.callThrough();
+
+        service.setupMessaging(userMock).then(() => {
+          expect(messagingMock.requestPermission).toHaveBeenCalled();
+          expect(messagingMock.getToken).toHaveBeenCalled();
+          expect(messagingMock.onMessage).toHaveBeenCalled();
+          expect(subscriptionsService.save).toHaveBeenCalled();
+
+          expect(onMessageHandler).toBeTruthy();
+
+          const reminderIdMock = 'REMINDER_ID_MOCK';
+          const notificationPayloadMock = {
+            data: {
+              title: 'TITLE_MOCK',
+              click_action:
+                'https://remindme.apps.andreafailli.it/inbox;reminder=' +
+                reminderIdMock
+            }
+          };
+          const notification: Notification = onMessageHandler(
+            notificationPayloadMock
+          );
+          expect(notification.title).toBe(notificationPayloadMock.data.title);
+          expect(notification.onclick).toBeTruthy();
+
+          notification.onclick(null);
+          expect(router.navigate).toHaveBeenCalledWith([
+            '/inbox',
+            { reminder: reminderIdMock }
+          ]);
+        });
       }
     )
   );
