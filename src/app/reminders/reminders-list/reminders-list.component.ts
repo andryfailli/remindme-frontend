@@ -48,12 +48,10 @@ export class RemindersListComponent implements OnInit {
           }
         });
         dialogRef.afterClosed().subscribe((reminder: Reminder) => {
-          this.router.navigate(
-            [reminder && reminder.archived ? '/archive' : '/inbox'],
-            {
-              queryParams: { reminder: null }
-            }
-          );
+          this.router.navigate([
+            reminder && reminder.archived ? '/archive' : '/inbox',
+            { reminder: null }
+          ]);
           this.listReminders();
         });
       }

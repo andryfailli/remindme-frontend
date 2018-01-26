@@ -19,6 +19,8 @@ import { UsersService } from '../users/users-service/users.service';
 @Injectable()
 export class AuthService {
   user$: Observable<User | null>;
+  private _user$: Observable<User | null>;
+  private _user: User;
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -26,15 +28,23 @@ export class AuthService {
     private userService: UsersService,
     private subscriptionsService: SubscriptionsService
   ) {
-    this.user$ = this.angularFireAuth.authState.switchMap((firebaseUser) => {
-      if (firebaseUser) {
-        const user$: Observable<User> = userService.get('me').share();
-        user$.subscribe((user: User) => this.setupMessaging(user));
-        return user$;
-      } else {
-        return Observable.of(null);
+    this.user$ = this.angularFireAuth.authState.switchMap(
+      (firebaseUser: firebase.User) => {
+        if (firebaseUser) {
+          if (!this._user || this._user.id !== firebaseUser.uid) {
+            this._user$ = userService.get('me').share();
+            this._user$.subscribe((user: User) => {
+              this.setupMessaging(user);
+              this._user = user;
+            });
+          }
+        } else {
+          this._user = null;
+          this._user$ = Observable.of(null);
+        }
+        return this._user$;
       }
-    });
+    );
   }
 
   signIn(): Promise<any> {
@@ -52,6 +62,24 @@ export class AuthService {
 
   setupMessaging(user: User): Promise<any> {
     const messaging = firebase.messaging();
+
+    messaging.onMessage((payload: any) => {
+      const options: NotificationOptions = {
+        icon: '/favicon.png'
+      };
+
+      const notification: Notification = new Notification(
+        payload.data.title,
+        options
+      );
+
+      notification.onclick = () => {
+        const reminderId = payload.data.click_action.split('=')[1];
+        this.router.navigate(['/inbox', { reminder: reminderId }]);
+      };
+
+      return notification;
+    });
 
     return messaging
       .requestPermission()
