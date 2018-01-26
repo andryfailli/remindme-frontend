@@ -5,12 +5,12 @@
   "display": "standalone",
   "gcm_sender_id": "103953800507",
   "icons": [
-        {
-            "src": "/assets/icon.png",
-            "sizes": "45x45",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    {
+      "src": "/favicon.png",
+      "sizes": "45x45",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff"
 }
