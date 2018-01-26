@@ -132,7 +132,6 @@ describe('AuthService', () => {
           const notification: Notification = onMessageHandler(
             notificationPayloadMock
           );
-          expect(notification.title).toBe(notificationPayloadMock.data.title);
           expect(notification.onclick).toBeTruthy();
 
           notification.onclick(null);

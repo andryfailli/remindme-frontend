@@ -67,6 +67,7 @@ export class AuthService {
       const options: NotificationOptions = {
         icon: '/favicon.png'
       };
+
       const notification: Notification = new Notification(
         payload.data.title,
         options
