@@ -23,7 +23,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
   styleUrls: ['./reminders-list.component.css']
 })
 export class RemindersListComponent implements OnInit {
-  private reminders$: Observable<Reminder[]>;
+  reminders$: Observable<Reminder[]>;
   remindersUpcoming$: Observable<Reminder[]>;
   remindersPast$: Observable<Reminder[]>;
 

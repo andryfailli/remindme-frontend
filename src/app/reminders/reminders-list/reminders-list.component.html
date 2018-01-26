@@ -14,8 +14,17 @@
                 (unarchive)="unarchiveReminder(reminder)" (delete)="deleteReminder(reminder)"></app-reminder-list-item>
         </ng-container>
     </ng-container>
+
+    <div *ngIf="(reminders$ | async).length===0" style="text-align: center">
+        <mat-icon class="empty-icon" aria-label="New reminder" matTooltip="New reminder">inbox</mat-icon>
+        <button mat-button class="create-btn" [routerLink]="['/inbox', {reminder: ''}]" matTooltip="New reminder">
+            Create new reminder
+        </button>
+    </div>
+
 </mat-nav-list>
 
-<button mat-fab class="mat-accent" style="position: fixed; bottom:16px; right:16px;" [routerLink]="['/inbox', {reminder: ''}]">
-    <mat-icon aria-label="New reminder" matTooltip="New reminder">add</mat-icon>
+<button mat-fab class="mat-accent" style="position: fixed; bottom:16px; right:16px;" [routerLink]="['/inbox', {reminder: ''}]"
+    matTooltip="New reminder">
+    <mat-icon aria-label="New reminder">add</mat-icon>
 </button>
