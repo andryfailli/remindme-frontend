@@ -7,6 +7,9 @@ import { AuthService } from '../auth-service/auth.service';
 import { User } from '../models/user.model';
 import { MainToolbarComponent } from './main-toolbar.component';
 
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+
 describe('MainToolbarComponent', () => {
   let component: MainToolbarComponent;
   let fixture: ComponentFixture<MainToolbarComponent>;
@@ -36,5 +39,15 @@ describe('MainToolbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit navigate onClick', () => {
+    const buttonElement: DebugElement = fixture.debugElement.query(
+      By.css('button')
+    );
+    let emitted;
+    component.toggleSidenav.subscribe(() => (emitted = true));
+    buttonElement.triggerEventHandler('click', null);
+    expect(emitted).toEqual(true);
   });
 });
