@@ -94,7 +94,8 @@ describe('AuthService', () => {
 
         spyOn(firebase, 'messaging').and.returnValue({
           requestPermission: () => Observable.of().toPromise(),
-          getToken: () => Observable.of(ID_TOKEN_MOCK).toPromise()
+          getToken: () => Observable.of(ID_TOKEN_MOCK).toPromise(),
+          onMessage: () => undefined
         });
         spyOn(subscriptionsService, 'save').and.callThrough();
         service
