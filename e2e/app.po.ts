@@ -2,10 +2,15 @@ import { browser, by, element } from 'protractor';
 
 export class AppPage {
   navigateTo() {
+    browser.ignoreSynchronization = true;
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getMainToolbar() {
+    return element(by.css('app-main-toolbar'));
+  }
+
+  getMainToolbarText() {
+    return element(by.css('app-main-toolbar .app-title')).getText();
   }
 }

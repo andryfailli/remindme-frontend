@@ -7,8 +7,9 @@ describe('remindme-frontend App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display main toolbar title', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getMainToolbar()).toBeTruthy();
+    expect(page.getMainToolbarText()).toEqual('Remind Me!');
   });
 });
