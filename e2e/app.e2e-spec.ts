@@ -1,15 +1,31 @@
+import { browser } from 'protractor';
+
 import { AppPage } from './app.po';
 
 describe('remindme-frontend App', () => {
-  let page: AppPage;
+  it('should display main toolbar title', async () => {
+    const app = new AppPage();
+    await app.navigateTo();
 
-  beforeEach(() => {
-    page = new AppPage();
+    expect(app.getMainToolbar()).toBeTruthy();
+    expect(app.getMainToolbarText()).toEqual('Remind Me!');
   });
 
-  it('should display main toolbar title', () => {
-    page.navigateTo();
-    expect(page.getMainToolbar()).toBeTruthy();
-    expect(page.getMainToolbarText()).toEqual('Remind Me!');
+  it('should login with email and password', async () => {
+    const app = new AppPage();
+
+    expect(browser.params.userEmail).toBeTruthy();
+    expect(browser.params.userPassword).toBeTruthy();
+
+    await app.navigateTo();
+
+    await app.getLoginEmailField().sendKeys(browser.params.userEmail);
+    await app.getLoginPasswordField().sendKeys(browser.params.userPassword);
+    await app.getLoginSignInButton().click();
+
+    await browser.sleep(5000); // wait firebase...
+
+    const url = await browser.getCurrentUrl();
+    expect(url.endsWith('/inbox')).toBe(true);
   });
 });
