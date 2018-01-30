@@ -203,9 +203,6 @@ describe('RemindersListComponent (with reminderId)', () => {
     spyOn(router, 'navigate').and.callThrough();
     fixture.detectChanges();
     expect(matDialog.open).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalledWith([
-      '/inbox',
-      { reminder: null }
-    ]);
+    expect(router.navigate).toHaveBeenCalledWith(['/inbox']);
   });
 });
