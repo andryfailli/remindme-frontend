@@ -8,7 +8,10 @@ import {
   MatSidenavModule,
   MatListModule,
   MatIconModule,
-  MatButtonModule
+  MatButtonModule,
+  MatFormField,
+  MatFormFieldModule,
+  MatInputModule
 } from '@angular/material';
 
 import { RemindersModule } from './reminders/reminders.module';
@@ -30,6 +33,8 @@ import { UsersModule } from './users/users.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from './auth-http-interceptor/auth-http.interceptor';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { FormsModule } from '@angular/forms';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/inbox', pathMatch: 'full' },
@@ -51,7 +56,8 @@ const appRoutes: Routes = [
     AppComponent,
     MainToolbarComponent,
     MainSidenavContentComponent,
-    LoginComponent
+    LoginComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
@@ -60,12 +66,15 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: false } // <-- set to true for debugging purposes only
     ),
+    FormsModule,
     MatToolbarModule,
     MatSidenavModule,
     RemindersModule,
     MatListModule,
     MatIconModule,
+    MatInputModule,
     MatButtonModule,
+    MatFormFieldModule,
     UtilsModule,
     UsersModule,
     SubscriptionsModule,

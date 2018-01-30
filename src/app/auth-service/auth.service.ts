@@ -47,9 +47,16 @@ export class AuthService {
     );
   }
 
-  signIn(): Promise<any> {
+  signInWithGoogle(): Promise<any> {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.angularFireAuth.auth.signInWithPopup(provider);
+  }
+
+  signInWithEmailAndPassword(email: string, password: string): Promise<any> {
+    return this.angularFireAuth.auth.signInWithEmailAndPassword(
+      email,
+      password
+    );
   }
 
   signOut(): Promise<any> {

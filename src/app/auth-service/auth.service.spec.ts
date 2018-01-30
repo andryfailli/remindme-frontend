@@ -11,7 +11,10 @@ import { SubscriptionsService } from '../subscriptions/subscriptions-service/sub
 import * as firebase from 'firebase/app';
 import { User } from '../models/user.model';
 
-describe('AuthService', () => {
+describe('AuthService (without user)', () => {
+  const USER_EMAIL_MOCK = 'USER_EMAIL_MOCK';
+  const USER_PASSWORD_MOCK = 'USER_PASSWORD_MOCK';
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -32,7 +35,7 @@ describe('AuthService', () => {
             authState: Observable.of(null),
             auth: {
               signInWithPopup: () => Observable.of(null).toPromise(),
-              signOut: () => Observable.of(null).toPromise()
+              signInWithEmailAndPassword: () => Observable.of(null).toPromise()
             }
           }
         },
@@ -54,32 +57,27 @@ describe('AuthService', () => {
   );
 
   it(
-    'should signIn',
+    'should signInWithGoogle',
     inject(
       [AuthService, AngularFireAuth],
       (service: AuthService, angularFireAuth: AngularFireAuth) => {
         spyOn(angularFireAuth.auth, 'signInWithPopup');
-        service.signIn();
+        service.signInWithGoogle();
         expect(angularFireAuth.auth.signInWithPopup).toHaveBeenCalled();
       }
     )
   );
 
   it(
-    'should signOut',
+    'should signInWithEmailAndPassword',
     inject(
-      [AuthService, AngularFireAuth, Router],
-      (
-        service: AuthService,
-        angularFireAuth: AngularFireAuth,
-        router: Router
-      ) => {
-        spyOn(angularFireAuth.auth, 'signOut').and.callThrough();
-        spyOn(router, 'navigate').and.callThrough();
-        service
-          .signOut()
-          .then(() => expect(router.navigate).toHaveBeenCalledWith(['/']));
-        expect(angularFireAuth.auth.signOut).toHaveBeenCalled();
+      [AuthService, AngularFireAuth],
+      (service: AuthService, angularFireAuth: AngularFireAuth) => {
+        spyOn(angularFireAuth.auth, 'signInWithEmailAndPassword');
+        service.signInWithEmailAndPassword(USER_EMAIL_MOCK, USER_PASSWORD_MOCK);
+        expect(
+          angularFireAuth.auth.signInWithEmailAndPassword
+        ).toHaveBeenCalledWith(USER_EMAIL_MOCK, USER_PASSWORD_MOCK);
       }
     )
   );
@@ -140,6 +138,67 @@ describe('AuthService', () => {
             { reminder: reminderIdMock }
           ]);
         });
+      }
+    )
+  );
+});
+
+describe('AuthService (with a logged in user)', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        AuthService,
+        {
+          provide: UsersService,
+          useValue: {}
+        },
+        {
+          provide: SubscriptionsService,
+          useValue: {
+            save: () => Observable.of(null)
+          }
+        },
+        {
+          provide: AngularFireAuth,
+          useValue: {
+            authState: Observable.of({ uid: 'XYZ' }),
+            auth: {
+              signOut: () => Observable.of(null).toPromise()
+            }
+          }
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate: () => Observable.of(true).toPromise()
+          }
+        }
+      ]
+    });
+  });
+
+  it(
+    'should be created',
+    inject([AuthService], (service: AuthService) => {
+      expect(service).toBeTruthy();
+    })
+  );
+
+  it(
+    'should signOut',
+    inject(
+      [AuthService, AngularFireAuth, Router],
+      (
+        service: AuthService,
+        angularFireAuth: AngularFireAuth,
+        router: Router
+      ) => {
+        spyOn(angularFireAuth.auth, 'signOut').and.callThrough();
+        spyOn(router, 'navigate').and.callThrough();
+        service
+          .signOut()
+          .then(() => expect(router.navigate).toHaveBeenCalledWith(['/']));
+        expect(angularFireAuth.auth.signOut).toHaveBeenCalled();
       }
     )
   );
