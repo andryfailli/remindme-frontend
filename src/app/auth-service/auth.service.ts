@@ -19,8 +19,8 @@ import { UsersService } from '../users/users-service/users.service';
 @Injectable()
 export class AuthService {
   user$: Observable<User | null>;
-  private _user$: Observable<User | null>;
-  private _user: User;
+
+  private currentUser: User;
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -31,18 +31,20 @@ export class AuthService {
     this.user$ = this.angularFireAuth.authState.switchMap(
       (firebaseUser: firebase.User) => {
         if (firebaseUser) {
-          if (!this._user || this._user.id !== firebaseUser.uid) {
-            this._user$ = userService.get('me').share();
-            this._user$.subscribe((user: User) => {
+          let $u;
+          if (this.currentUser) {
+            $u = Observable.of(this.currentUser);
+          } else {
+            $u = userService.get('me').share();
+            $u.subscribe((user: User) => {
+              this.currentUser = user;
               this.setupMessaging(user);
-              this._user = user;
             });
           }
+          return $u;
         } else {
-          this._user = null;
-          this._user$ = Observable.of(null);
+          return Observable.of(null);
         }
-        return this._user$;
       }
     );
   }
