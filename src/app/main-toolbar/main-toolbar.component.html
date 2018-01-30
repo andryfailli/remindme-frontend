@@ -3,6 +3,8 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span class="app-title">Remind Me!</span>
-  <img class="user-photo" *ngIf="user$ | async as user" matTooltip="user.name" [src]="user.photoUrl" routerLink="/login">
+  <a routerLink="/login" *ngIf="user$ | async as user">
+    <img class="user-photo" matTooltip="user.name" [src]="user.photoUrl">
+  </a>
 </mat-toolbar>
 <div class="push-element"></div>
