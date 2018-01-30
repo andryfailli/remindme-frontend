@@ -19,8 +19,20 @@ export class LoginComponent {
     this.user$ = this.authService.user$.share();
   }
 
-  signIn(): Promise<any> {
-    const promise = this.authService.signIn();
+  signInWithGoogle(): Promise<any> {
+    const promise = this.authService.signInWithGoogle();
+    promise.then(() => this.router.navigate(['/']));
+    return promise;
+  }
+
+  signInWithEmailAndPassword(data: {
+    email: string;
+    password: string;
+  }): Promise<any> {
+    const promise = this.authService.signInWithEmailAndPassword(
+      data.email,
+      data.password
+    );
     promise.then(() => this.router.navigate(['/']));
     return promise;
   }

@@ -12,6 +12,9 @@ import * as firebase from 'firebase/app';
 import { User } from '../models/user.model';
 
 describe('AuthService', () => {
+  const USER_EMAIL_MOCK = 'USER_EMAIL_MOCK';
+  const USER_PASSWORD_MOCK = 'USER_PASSWORD_MOCK';
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -32,6 +35,7 @@ describe('AuthService', () => {
             authState: Observable.of(null),
             auth: {
               signInWithPopup: () => Observable.of(null).toPromise(),
+              signInWithEmailAndPassword: () => Observable.of(null).toPromise(),
               signOut: () => Observable.of(null).toPromise()
             }
           }
@@ -54,13 +58,27 @@ describe('AuthService', () => {
   );
 
   it(
-    'should signIn',
+    'should signInWithGoogle',
     inject(
       [AuthService, AngularFireAuth],
       (service: AuthService, angularFireAuth: AngularFireAuth) => {
         spyOn(angularFireAuth.auth, 'signInWithPopup');
-        service.signIn();
+        service.signInWithGoogle();
         expect(angularFireAuth.auth.signInWithPopup).toHaveBeenCalled();
+      }
+    )
+  );
+
+  it(
+    'should signInWithEmailAndPassword',
+    inject(
+      [AuthService, AngularFireAuth],
+      (service: AuthService, angularFireAuth: AngularFireAuth) => {
+        spyOn(angularFireAuth.auth, 'signInWithEmailAndPassword');
+        service.signInWithEmailAndPassword(USER_EMAIL_MOCK, USER_PASSWORD_MOCK);
+        expect(
+          angularFireAuth.auth.signInWithEmailAndPassword
+        ).toHaveBeenCalledWith(USER_EMAIL_MOCK, USER_PASSWORD_MOCK);
       }
     )
   );
