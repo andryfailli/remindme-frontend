@@ -13,4 +13,20 @@ export class AppPage {
   getMainToolbarText() {
     return element(by.css('app-main-toolbar .app-title')).getText();
   }
+
+  getLoginButton() {
+    return element(by.css('.login-btn'));
+  }
+
+  getLoginEmailField() {
+    return element(by.css('app-login-form [type=email]'));
+  }
+
+  getLoginPasswordField() {
+    return element(by.css('app-login-form [type=password]'));
+  }
+
+  getLoginSignInButton() {
+    return element(by.css('app-login-form [type=submit]'));
+  }
 }
