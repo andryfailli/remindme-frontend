@@ -17,6 +17,7 @@
 
     <div *ngIf="(reminders$ | async)?.length===0" style="text-align: center">
         <mat-icon class="empty-icon" aria-label="New reminder" matTooltip="New reminder">inbox</mat-icon>
+        <br>
         <button mat-button class="create-btn" [routerLink]="['/inbox', {reminder: ''}]" matTooltip="New reminder">
             Create new reminder
         </button>
