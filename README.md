@@ -1,5 +1,5 @@
 # RemindMe! Frontend
-Frontend build with Angular 5 & Angular Material for RemindMe!
+Frontend for RemindMe! built with Angular 5 & Angular Material, served through a nginx Docker container.
 
 [![Build Status](https://travis-ci.org/andryfailli/remindme-frontend.svg?branch=master)](https://travis-ci.org/andryfailli/remindme-frontend)
 [![Coverage Status](https://coveralls.io/repos/github/andryfailli/remindme-frontend/badge.svg?branch=master)](https://coveralls.io/github/andryfailli/remindme-frontend?branch=master)
@@ -8,16 +8,20 @@ Frontend build with Angular 5 & Angular Material for RemindMe!
 [![SonarCloud Vulnerabilities](https://sonarcloud.io/api/badges/measure?key=it.andreafailli.remindme%3Aremindme-frontend%3Amaster&metric=vulnerabilities)](https://sonarcloud.io/component_measures/metric/security_rating/list?id=it.andreafailli.remindme%3Aremindme-frontend%3Amaster)
 [![SonarCloud Technical Debt](https://sonarcloud.io/api/badges/measure?key=it.andreafailli.remindme%3Aremindme-frontend%3Amaster&metric=sqale_index)](https://sonarcloud.io/component_measures/metric/sqale_index/list?id=it.andreafailli.remindme%3Aremindme-frontend%3Amaster)
 
-## Prerequisites
+## Angular project
+### Prerequisites
 Make sure you have angular-cli installed (`npm install -g @angular/cli`) and then run `npm install` into the project folder.
 
-## Run
+### Run
 Run `ng serve`
 
-## Test
+### Test
 Run `ng test --code-coverage`
 
-## Build
+### Build
 Run `ng build` to build the fontend into the `dist` folder.
 
-Alternatively, you can do a maven build running `ng clean package`. The maven build also builds the Docker image. (You need to have Docker installed)
+
+
+## Docker image
+If you want to build the final Docker image, you can do a maven build running `maven clean package` (you need to have Docker installed and running).
