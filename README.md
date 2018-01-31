@@ -9,7 +9,7 @@ Frontend build with Angular 5 & Angular Material for RemindMe!
 [![SonarCloud Technical Debt](https://sonarcloud.io/api/badges/measure?key=it.andreafailli.remindme%3Aremindme-frontend%3Amaster&metric=sqale_index)](https://sonarcloud.io/component_measures/metric/sqale_index/list?id=it.andreafailli.remindme%3Aremindme-frontend%3Amaster)
 
 ## Prerequisites
-Make sure you have angular-cli installed (`npm install -g @angular/cli`) and then run `npm install`.
+Make sure you have angular-cli installed (`npm install -g @angular/cli`) and then run `npm install` into the project folder.
 
 ## Run
 Run `ng serve`
