@@ -24,4 +24,4 @@ Run `ng build` to build the fontend into the `dist` folder.
 
 
 ## Docker image
-If you want to build the final Docker image, you can do a maven build running `maven clean package` (you need to have Docker installed and running).
+If you want to build the final Docker image, you can do a maven build running `mvn clean package` (you need to have Docker installed and running).
