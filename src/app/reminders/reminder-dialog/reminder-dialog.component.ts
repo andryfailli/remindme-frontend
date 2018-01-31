@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MAT_DIALOG_DATA, MatSnackBar, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Reminder } from '../../models/reminder.model';
 import { RemindersService } from '../reminders-service/reminders.service';
@@ -21,6 +21,7 @@ export class ReminderDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
+    private dialogRef: MatDialogRef<ReminderDialogComponent>,
     private remindersService: RemindersService,
     private matSnackBar: MatSnackBar,
     private authService: AuthService
@@ -44,11 +45,10 @@ export class ReminderDialogComponent implements OnInit {
   }
 
   saveReminder() {
-    this.remindersService
-      .save(this.reminder)
-      .subscribe(() =>
-        this.matSnackBar.open('Reminder saved.', null, { duration: 2000 })
-      );
+    this.remindersService.save(this.reminder).subscribe(() => {
+      this.matSnackBar.open('Reminder saved.', null, { duration: 2000 });
+      this.dialogRef.close(this.reminder);
+    });
   }
 
   ngOnInit() {
