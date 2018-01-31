@@ -1,0 +1,15 @@
+<form *ngIf="reminder">
+  <mat-form-field>
+    <input name="what" matInput placeholder="What" [(ngModel)]="reminder.title">
+  </mat-form-field>
+  <mat-form-field>
+    <input name="when" matInput [(ngModel)]="reminder.date" placeholder="When" type="datetime-local">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select name="who" [(ngModel)]="reminder.user" placeholder="Who" [compareWith]="comparatorById">
+      <mat-option *ngFor="let user of users$ | async; trackBy: trackerById" [value]="user">
+        <img src="{{user.photoUrl}}" class="user-photo"> {{user.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

@@ -1,0 +1,16 @@
+{
+  "name": "Remind Me!",
+  "short_name": "Remind Me!",
+  "start_url": "/",
+  "display": "standalone",
+  "gcm_sender_id": "103953800507",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "45x45",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff"
+}

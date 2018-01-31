@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Reminder</h2>
+<mat-dialog-content>
+  <app-reminder-form [reminder]="reminder"></app-reminder-form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <span style="flex: 1"></span>
+  <button mat-button color="primary" (click)="saveReminder()" class="ok-btn">Ok</button>
+</mat-dialog-actions>

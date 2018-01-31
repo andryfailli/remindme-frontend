@@ -1,0 +1,30 @@
+<mat-list-item role="listitem" class="mat-typography" [routerLink]="[reminder?.archived ? '/archive' : '/inbox', {reminder: reminder?.id}]">
+    <h4 mat-line>{{reminder?.title}}</h4>
+    <p mat-line>{{reminder?.date | date:'short' }}</p>
+    <img matListAvatar src="{{reminder?.user?.photoUrl}}" alt="{{reminder?.user?.name}}">
+    <button class="archive-btn" mat-icon-button matTooltip="Archive" *ngIf="reminder?.archived===false" (click)="onArchiveClick()"
+        appClickStopPropagation>
+        <mat-icon>archive</mat-icon>
+    </button>
+    <button class="unarchive-btn" mat-icon-button matTooltip="Unarchive" *ngIf="reminder?.archived===true" (click)="onUnarchiveClick()"
+        appClickStopPropagation>
+        <mat-icon>unarchive</mat-icon>
+    </button>
+    <button class="more-btn" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More..." appClickStopPropagation>
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button class="archive-menu-btn" mat-menu-item *ngIf="reminder?.archived===false" (click)="onArchiveClick()">
+            <mat-icon>archive</mat-icon>
+            <span>Archive</span>
+        </button>
+        <button class="unarchive-menu-btn" mat-menu-item *ngIf="reminder?.archived===true" (click)="onUnarchiveClick()">
+            <mat-icon>unarchive</mat-icon>
+            <span>Unarchive</span>
+        </button>
+        <button class="delete-menu-btn" mat-menu-item (click)="onDeleteClick()">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+        </button>
+    </mat-menu>
+</mat-list-item>

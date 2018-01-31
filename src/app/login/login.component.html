@@ -1,0 +1,15 @@
+<div class="login-btn-container mat-typography" *ngIf="!(user$ | async)">
+  <app-login-form (submit)="signInWithEmailAndPassword($event)"></app-login-form>
+  <br>
+  <br>
+  <small style="text-align:center">or</small>
+  <br>
+  <br>
+  <button mat-button mat-raised-button class="mat-accent google-login-btn" (click)="signInWithGoogle()">
+    <img src="/assets/google-icon.png"> Sign in with Google</button>
+</div>
+<div class="login-btn-container mat-typography" *ngIf="user$ | async as user">
+  <h2>{{user.name}}</h2>
+  <h4>{{user.email}}</h4>
+  <button mat-button mat-raised-button class="mat-accent logout-btn" (click)="signOut()">Sign Out</button>
+</div>
