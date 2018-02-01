@@ -23,7 +23,7 @@ describe('remindme-frontend App', () => {
     await app.getLoginPasswordField().sendKeys(browser.params.userPassword);
     await app.getLoginSignInButton().click();
 
-    await browser.sleep(5000); // wait firebase...
+    await browser.sleep(30000); // wait firebase...
 
     const url = await browser.getCurrentUrl();
     expect(url.endsWith('/inbox')).toBe(true);
