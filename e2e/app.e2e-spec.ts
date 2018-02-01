@@ -26,6 +26,6 @@ describe('remindme-frontend App', () => {
     await browser.sleep(30000); // wait firebase...
 
     const url = await browser.getCurrentUrl();
-    expect(url.endsWith('/inbox')).toBe(true);
+    expect(url.endsWith('/inbox')).toBe(true, url);
   });
 });
