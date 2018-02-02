@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /target
+/.stryker-tmp
 
 # dependencies
 /node_modules
@@ -30,6 +31,7 @@
 /.sass-cache
 /connect.lock
 /coverage
+/reports
 /libpeerconnection.log
 npm-debug.log
 testem.log
