@@ -6,6 +6,7 @@ const WebpackTestConfig = require('@angular/cli/models/webpack-test-config').Web
 const AngularCompilerPlugin = require('@ngtools/webpack/src/angular_compiler_plugin').AngularCompilerPlugin;
 
 const appConfig = getAppFromConfig();
+appConfig.assets = appConfig.assets.filter(asset => asset !== 'firebase-messaging-sw.js');
 const testConfig = Object.assign({
   environment: 'dev',
   codeCoverage: false,
