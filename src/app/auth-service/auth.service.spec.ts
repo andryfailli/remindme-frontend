@@ -141,16 +141,37 @@ describe('AuthService (without user)', () => {
       }
     )
   );
+
+  it(
+    'should not signIn if firebase currentUser is null',
+    inject(
+      [AuthService, AngularFireAuth, Router],
+      (
+        service: AuthService,
+        angularFireAuth: AngularFireAuth,
+        router: Router
+      ) => {
+        spyOn(service, 'setupMessaging').and.returnValue(
+          Observable.of(null).toPromise()
+        );
+        service.user$.subscribe((user: User) => expect(user).toBeNull());
+      }
+    )
+  );
 });
 
 describe('AuthService (with a logged in user)', () => {
+  const userMock = new User({ id: 'XYZ' });
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         AuthService,
         {
           provide: UsersService,
-          useValue: {}
+          useValue: {
+            get: () => Observable.of(userMock)
+          }
         },
         {
           provide: SubscriptionsService,
@@ -193,12 +214,35 @@ describe('AuthService (with a logged in user)', () => {
         angularFireAuth: AngularFireAuth,
         router: Router
       ) => {
+        spyOn(service, 'setupMessaging').and.returnValue(
+          Observable.of(null).toPromise()
+        );
+        service.user$.subscribe((user: User) => null); // subscribe to turn on the Observable.
+
         spyOn(angularFireAuth.auth, 'signOut').and.callThrough();
         spyOn(router, 'navigate').and.callThrough();
         service
           .signOut()
           .then(() => expect(router.navigate).toHaveBeenCalledWith(['/']));
         expect(angularFireAuth.auth.signOut).toHaveBeenCalled();
+      }
+    )
+  );
+
+  it(
+    'should not call UsersService.get(me) if firebaseUser has not changed',
+    inject(
+      [AuthService, AngularFireAuth, UsersService],
+      (
+        service: AuthService,
+        angularFireAuth: AngularFireAuth,
+        usersService: UsersService
+      ) => {
+        service['currentUser'] = userMock;
+        spyOn(usersService, 'get').and.callThrough();
+        service.user$.subscribe((user: User) => null); // subscribe to turn on the Observable.
+
+        expect(usersService.get).toHaveBeenCalledTimes(0);
       }
     )
   );
