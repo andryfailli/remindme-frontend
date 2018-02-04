@@ -13,10 +13,12 @@ Frontend for RemindMe! built with Angular 5 & Angular Material, served through a
 Make sure you have angular-cli installed (`npm install -g @angular/cli`) and then run `npm install` into the project folder.
 
 ### Run
-Run `ng serve`
+Run `ng serve`.
 
 ### Test
-Run `ng test --code-coverage`
+Run `ng test --code-coverage`.
+
+For mutation testing `npm run stryker`.
 
 ### Build
 Run `ng build` to build the fontend into the `dist` folder.
